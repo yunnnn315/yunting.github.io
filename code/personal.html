@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IMNTPU Lab — Research Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=Space+Mono&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0d0f14;
+      --surface: #141720;
+      --surface2: #1c2030;
+      --border: #252a38;
+      --accent: #5b7fff;
+      --accent2: #a78bfa;
+      --gold: #f0b429;
+      --text: #e8eaf0;
+      --muted: #6b7280;
+      --green: #34d399;
+      --tag-bg: #1e2540;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ─── GRID BACKGROUND ─── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(91,127,255,.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(91,127,255,.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 3rem;
+      background: rgba(13,15,20,.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: 'Space Mono', monospace;
+      font-size: .8rem;
+      color: var(--accent);
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: .85rem;
+      font-weight: 500;
+      letter-spacing: .04em;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    /* ─── HERO ─── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      align-items: center;
+      gap: 5rem;
+      padding: 8rem 5rem 4rem;
+      z-index: 1;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: -200px; right: -200px;
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(91,127,255,.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    /* ─── PROFILE PHOTO BLOCK ─── */
+    .profile-block {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.6rem;
+    }
+
+    .profile-photo-wrap {
+      position: relative;
+      width: 240px;
+      height: 240px;
+    }
+
+    .profile-photo-wrap::before {
+      content: '';
+      position: absolute;
+      inset: -3px;
+      border-radius: 50%;
+      background: conic-gradient(var(--accent), var(--accent2), var(--accent));
+      animation: spin 6s linear infinite;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .profile-photo-wrap::after {
+      content: '';
+      position: absolute;
+      inset: 2px;
+      border-radius: 50%;
+      background: var(--bg);
+    }
+
+    .profile-photo {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .profile-photo-placeholder {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--surface2), var(--tag-bg));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'DM Serif Display', serif;
+      font-size: 5rem;
+      color: var(--accent);
+      letter-spacing: -.02em;
+    }
+
+    .profile-name-block {
+      text-align: center;
+    }
+
+    .profile-name-zh {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.6rem;
+      color: var(--text);
+      margin-bottom: .2rem;
+    }
+
+    .profile-name-en {
+      font-family: 'Space Mono', monospace;
+      font-size: .78rem;
+      color: var(--accent);
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    .profile-socials {
+      display: flex;
+      gap: .7rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .social-btn {
+      font-size: .72rem;
+      font-family: 'Space Mono', monospace;
+      padding: .3rem .85rem;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      color: var(--muted);
+      text-decoration: none;
+      transition: all .2s;
+    }
+    .social-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* ─── HERO TEXT ─── */
+    .hero-label {
+      font-family: 'Space Mono', monospace;
+      font-size: .72rem;
+      color: var(--accent);
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      margin-bottom: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: .6rem;
+    }
+    .hero-label::before {
+      content: '';
+      display: inline-block;
+      width: 24px; height: 1px;
+      background: var(--accent);
+    }
+
+    .hero-name {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2.4rem, 4vw, 3.8rem);
+      line-height: 1.1;
+      color: var(--text);
+      margin-bottom: .4rem;
+    }
+
+    .hero-name span { color: var(--accent); }
+
+    .hero-sub {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(1rem, 1.8vw, 1.35rem);
+      color: var(--muted);
+      font-style: italic;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-desc {
+      font-size: .95rem;
+      color: #9ca3b0;
+      max-width: 480px;
+      margin-bottom: 1.6rem;
+      line-height: 1.8;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-direction: column;
+      gap: .5rem;
+      margin-bottom: 2rem;
+    }
+
+    .hero-meta-row {
+      display: flex;
+      align-items: center;
+      gap: .7rem;
+      font-size: .82rem;
+      color: var(--muted);
+    }
+
+    .hero-meta-row .meta-dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--accent2);
+      flex-shrink: 0;
+    }
+
+    .hero-ctas {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      padding: .65rem 1.4rem;
+      border-radius: 6px;
+      font-size: .85rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all .2s;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+    }
+    .btn-primary:hover { background: #7b94ff; transform: translateY(-1px); }
+    .btn-outline {
+      border: 1px solid var(--border);
+      color: var(--text);
+      background: transparent;
+    }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* ─── SECTION COMMONS ─── */
+    section {
+      position: relative;
+      z-index: 1;
+      padding: 5rem 5rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+      margin-bottom: 3rem;
+    }
+
+    .section-num {
+      font-family: 'Space Mono', monospace;
+      font-size: .7rem;
+      color: var(--accent);
+      opacity: .6;
+    }
+
+    .section-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      color: var(--text);
+    }
+
+    .section-title em {
+      font-style: italic;
+      color: var(--accent2);
+    }
+
+    /* ─── PUBLICATIONS ─── */
+    .pub-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .pub-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.6rem;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 1.2rem 1.6rem;
+      transition: border-color .3s;
+    }
+    .pub-item:hover { border-color: var(--accent); }
+
+    .pub-year {
+      font-family: 'Space Mono', monospace;
+      font-size: .72rem;
+      color: var(--accent);
+      padding-top: .25rem;
+      white-space: nowrap;
+    }
+
+    .pub-title {
+      font-weight: 600;
+      font-size: .95rem;
+      color: var(--text);
+      margin-bottom: .35rem;
+    }
+
+    .pub-authors {
+      font-size: .8rem;
+      color: var(--muted);
+      margin-bottom: .35rem;
+    }
+
+    .pub-venue {
+      font-size: .78rem;
+      color: var(--accent2);
+      font-style: italic;
+      margin-bottom: .7rem;
+    }
+
+    .pub-links {
+      display: flex;
+      gap: .6rem;
+      flex-wrap: wrap;
+    }
+
+    .pub-link {
+      font-size: .72rem;
+      font-family: 'Space Mono', monospace;
+      padding: .25rem .7rem;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      color: var(--muted);
+      text-decoration: none;
+      transition: all .2s;
+    }
+    .pub-link:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* ─── CERTS ─── */
+    .certs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.2rem;
+    }
+
+    .cert-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.4rem;
+      transition: border-color .3s, transform .3s;
+    }
+    .cert-card:hover { border-color: var(--gold); transform: translateY(-3px); }
+
+    .cert-icon {
+      font-size: 1.6rem;
+      margin-bottom: .8rem;
+    }
+
+    .cert-title {
+      font-weight: 600;
+      font-size: .9rem;
+      color: var(--text);
+      margin-bottom: .3rem;
+    }
+
+    .cert-issuer {
+      font-family: 'Space Mono', monospace;
+      font-size: .68rem;
+      color: var(--gold);
+      margin-bottom: .4rem;
+    }
+
+    .cert-date {
+      font-size: .75rem;
+      color: var(--muted);
+    }
+
+    /* ─── PROJECTS ─── */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.4rem;
+    }
+
+    .project-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      transition: border-color .3s, transform .3s;
+    }
+    .project-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+
+    .project-img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      background: var(--surface2);
+      display: block;
+    }
+    .project-img-placeholder {
+      width: 100%;
+      height: 160px;
+      background: linear-gradient(135deg, var(--surface2), var(--tag-bg));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Space Mono', monospace;
+      font-size: .65rem;
+      color: var(--border);
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    .project-img-placeholder::after {
+      content: attr(data-label);
+    }
+
+    .project-body {
+      padding: 1.2rem;
+    }
+
+    .project-date {
+      font-family: 'Space Mono', monospace;
+      font-size: .65rem;
+      color: var(--muted);
+      margin-bottom: .5rem;
+    }
+
+    .project-title {
+      font-weight: 600;
+      font-size: .9rem;
+      color: var(--text);
+      margin-bottom: .6rem;
+      line-height: 1.4;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .4rem;
+      margin-bottom: .8rem;
+    }
+
+    .tag {
+      font-size: .65rem;
+      font-weight: 500;
+      padding: .2rem .55rem;
+      background: var(--tag-bg);
+      color: var(--accent2);
+      border-radius: 4px;
+      font-family: 'Space Mono', monospace;
+    }
+
+    .project-links {
+      display: flex;
+      gap: .5rem;
+      flex-wrap: wrap;
+    }
+
+    /* ─── EXPERIENCE / TIMELINE ─── */
+    
+    .timeline {
+      position: relative;
+      padding-left: 2rem;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 1px;
+      background: linear-gradient(to bottom, var(--accent), transparent);
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 2.5rem;
+    }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -2.4rem;
+      top: .4rem;
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 10px rgba(91,127,255,.6);
+    }
+
+    .tl-date {
+      font-family: 'Space Mono', monospace;
+      font-size: .7rem;
+      color: var(--accent);
+      margin-bottom: .3rem;
+    }
+
+    .tl-title {
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--text);
+      margin-bottom: .2rem;
+    }
+
+    .tl-org {
+      font-size: .82rem;
+      color: var(--accent2);
+      margin-bottom: .4rem;
+    }
+
+    .tl-desc {
+      font-size: .85rem;
+      color: var(--muted);
+    }
+
+    /* ─── COMPETITIONS / MISC LISTS ─── */
+    .list-rows {
+      display: flex;
+      flex-direction: column;
+      gap: .7rem;
+    }
+
+    .list-row {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: .9rem 1.2rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      font-size: .85rem;
+      transition: border-color .3s;
+    }
+    .list-row:hover { border-color: var(--accent); }
+
+    .list-row .dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--green);
+      margin-top: .45rem;
+      flex-shrink: 0;
+    }
+
+    /* ─── TWO COLUMN ─── */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2.5rem 5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 1;
+      position: relative;
+    }
+
+    .footer-copy {
+      font-size: .8rem;
+      color: var(--muted);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .footer-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: .8rem;
+      transition: color .2s;
+    }
+    .footer-links a:hover { color: var(--accent); }
+
+    /* ─── MOBILE ─── */
+    @media (max-width: 860px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      .hero { grid-template-columns: 1fr; padding: 6rem 1.5rem 3rem; gap: 2.5rem; }
+      .profile-photo-wrap { width: 180px; height: 180px; }
+      section { padding: 3.5rem 1.5rem; }
+      .two-col { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 1rem; padding: 2rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">IMNTPU</div>
+  <ul class="nav-links">
+    <li><a href="#members">About me</a></li>
+    <li><a href="#publications">Research</a></li>
+    <li><a href="#projects">Certifications</a></li>
+    <li><a href="#certifications">Projects</a></li>
+    <li><a href="#competitions">Competitions</a></li>
+    <li><a href="#contact">Other</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="members">
+
+  <!-- LEFT: Photo block -->
+  <div class="profile-block">
+    <div class="profile-photo-wrap">
+      <!-- Replace src with your actual photo URL -->
+      <img
+        src="./image/photo.jpg"
+        alt="Profile Photo"
+        class="profile-photo"
+        onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+      />
+      <div class="profile-photo-placeholder" style="display:none;">Y</div>
+    </div>
+    <div class="profile-name-block">
+      <div class="profile-name-zh">徐勻庭</div>
+      <div class="profile-name-en">Yun-Ting Hsu</div>
+    </div>
+    <div class="profile-socials">
+      <a href="https://www.linkedin.com/in/yunnnn/" class="social-btn" target="_blank">LinkedIn</a>
+      <a href="https://github.com/yunting" class="social-btn" target="_blank">GitHub</a>
+      <a href="mailto:yunnnn.315@gmail.com" class="social-btn">Email</a>
+    </div>
+  </div>
+
+  <!-- RIGHT: Text block -->
+  <div>
+    <div class="hero-label">Graduate Researcher</div>
+    <h1 class="hero-name">About<br><span>Me</span></h1>
+    <p class="hero-sub">M.S. Student · Institute of Information Management</p>
+    <div class="hero-meta">
+      <div class="hero-meta-row">
+        <span class="meta-dot"></span>
+        <span>National Taipei University</span>
+      </div>
+      <div class="hero-meta-row">
+        <span class="meta-dot"></span>
+        <span>WCN Lab · Established by Prof. Huai-Sheng Huang</span>
+      </div>
+      <div class="hero-meta-row">
+        <span class="meta-dot"></span>
+        <span>Research: XR · Cloud Computing · Telecommunications</span>
+      </div>
+    </div>
+    <p class="hero-desc">
+      Focused on cloud computing, virtual reality, and 5G private network, 
+      aiming to address challenges such as latency, bandwidth limitations, 
+      and computational overhead in real-time interactive systems.
+    </p>
+    <!-- <div class="hero-ctas">
+      <a href="#publications" class="btn btn-primary">View Publications</a>
+      <a href="#projects" class="btn btn-outline">Explore Projects</a>
+    </div> -->
+  </div>
+
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-header">
+    <span class="section-num">01</span>
+    <h2 class="section-title">Edu<em>cation</em></h2>
+  </div>
+  <!-- <div class="timeline">
+    <div class="timeline-item">
+      <div class="tl-date">2024/09 — Present</div>
+      <div class="tl-title">Research Assistant</div>
+      <div class="tl-org">WCN Lab · National Taipei University</div>
+      <div class="tl-desc">
+        <em>Digital Support, Unimpeded Communication</em> — Development, Support and Promotion of AI-assisted Communication Assistive Devices for Speech Impairment.
+        Sub-project 3: Multimodal Cross-lingual Task-Oriented Dialogue System for Inclusive Communication Support.
+      </div>
+    </div>
+  </div> -->
+  <div class="timeline">
+    <div class="tl-date">2025/09 — Present</div>
+    <div class="tl-title">Master</div>
+    <div class="tl-org">National Taipei University</div>
+    <div class="tl-desc">
+      <em>Institute of Information Management</em>
+    </div>
+  </div>
+  <br><br>
+  <div class="timeline">
+      <div class="tl-date">2021/09 — 2025/06</div>
+      <div class="tl-title">Bachelor</div>
+      <div class="tl-org">Soochow University</div>
+      <div class="tl-desc">
+        <em>Department of Information Management</em>
+      </div>
+  </div>
+  <br><br>
+  <div class="timeline">
+      <div class="tl-date">2018/09 — 2021/06</div>
+      <div class="tl-title">High School</div>
+      <div class="tl-org">Hsin Chuang Senior High School</div>
+      <div class="tl-desc">
+        <em></em>
+      </div>
+  </div>
+</section>
+
+<!-- PUBLICATIONS -->
+<section id="publications">
+  <div class="section-header">
+    <span class="section-num">02</span>
+    <h2 class="section-title">Research <em>Experience</em></h2>
+  </div>
+  <div class="pub-list">
+
+    <div class="pub-item">
+      <div class="pub-year">2025/09<br> — Present</div>
+      <div>
+        <div class="pub-title">Research Assistant</div>
+        <div class="pub-authors">WCN Lab · National Taipei University</div>
+        <div class="pub-venue">Optimization of Virtual Reality Experience in a 5G Private Network Environment: The Impact of Network Configuration on QoS and QoE</div>
+        <!-- <div class="pub-links">
+          <a href="https://drive.google.com/file/d/1rZtoBqqjUvN6QEHkW7mAWyfE-8DFnXqt/view" class="pub-link" target="_blank">Slides</a>
+          <a href="https://drive.google.com/file/d/17_vIaAgD0GIF_vs2vFw2NQjU4vvQAp2l/view" class="pub-link" target="_blank">Full Text</a>
+        </div> -->
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-header">
+    <span class="section-num">03</span>
+    <h2 class="section-title">Certifi<em>cations</em></h2>
+  </div>
+  <div class="projects-grid">
+
+    <div class="project-card">
+      <!-- <div class="project-img-placeholder" data-label="InquAIry"></div> -->
+      <img src="./image/Cloud Technical Series.jpg" alt="Google Cloud" class="project-img">
+      <div class="project-body">
+        <div class="cert-title">Cloud Technical Series - AI in Action</div>
+        <div class="cert-issuer">Google Clound online learning</div>
+        <div class="cert-date">2026/03</div>
+        <!-- <div class="project-date">2026/01</div>
+        <div class="project-title">AI Disclosure & Trust in Knowledge Videos</div>
+        <div class="tags">
+          <span class="tag">AI</span><span class="tag">Virtual Creator</span><span class="tag">Disclosure</span>
+        </div>
+        <div class="project-links"> -->
+          <!-- <a href="https://inquairy.github.io/" class="pub-link" target="_blank">Live Site</a> -->
+          <!-- <a href="https://drive.google.com/file/d/1-iDAW9wnQ_-7gZd3F6ABPFK4wbSQ_Azh/view" class="pub-link" target="_blank">Report</a>
+        </div> -->
+      </div>
+    </div>
+
+    <div class="project-card">
+      <!-- <div class="project-img-placeholder" data-label="TariffMyBiz"></div> -->
+      <img src="./image/ACF_Badge.jpg" alt="AWS Cloud" class="project-img">
+      <div class="project-body">
+        <div class="cert-title">AWS Academy Graduate</div>
+        <div class="cert-issuer">AWS Cloud Foundations</div>
+        <div class="cert-date">2025/12</div>
+        <!-- <div class="project-date">2025/04</div>
+        <div class="project-title">TariffMyBiz — RAG Trade Inquiry System</div>
+        <div class="tags">
+          <span class="tag">RAG</span><span class="tag">Trade</span><span class="tag">AI Awards</span>
+        </div>
+        <div class="project-links">
+          <a href="https://www.youtube.com/watch?v=CgjfBryTFVQ" class="pub-link" target="_blank">YouTube</a>
+          <a href="https://github.com/Yunwcy/TariffMyBiz" class="pub-link" target="_blank">Report</a>
+        </div> -->
+      </div>
+    </div>
+
+    <div class="project-card">
+      <!-- <div class="project-img-placeholder" data-label="CodeMigo"></div> -->
+      <img src="./image/USR.jpg" alt="USR" class="project-img">
+      <div class="project-body">
+        <div class="cert-title">2025 NTPU USR x REsolution</div>
+        <div class="cert-issuer">Sustainable Technology Proposal Competition</div>
+        <div class="cert-date">2025/12</div>
+        <!-- <div class="project-date">2025/04</div>
+        <div class="project-title">CodeMigo — Gamified Coding Pet</div>
+        <div class="tags">
+          <span class="tag">Gamification</span><span class="tag">Open Source</span><span class="tag">EdTech</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/Yunwcy/CodeMigo" class="pub-link" target="_blank">Report</a>
+        </div> -->
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section id="certifications">
+  <div class="section-header">
+    <span class="section-num">04</span>
+    <h2 class="section-title">Selected <em>Projects</em></h2>
+  </div>
+  <div class="certs-grid">
+
+    <div class="cert-card">
+      <div class="cert-date">2026/01</div>
+      <div class="cert-title">AI Disclosure & Trust in Knowledge Videos</div>
+       <div class="tags">
+          <span class="tag">AI</span><span class="tag">Virtual Creator</span><span class="tag">Disclosure</span>
+        </div>
+      <div class="project-links">
+          <a href="https://drive.google.com/file/d/1-iDAW9wnQ_-7gZd3F6ABPFK4wbSQ_Azh/view" class="pub-link" target="_blank">Report</a>
+        </div>
+    </div>
+
+    <div class="cert-card">
+      <div class="cert-date">2025/05</div>
+      <div class="cert-title">E-Com Pandemic Analysis</div>
+       <div class="tags">
+          <span class="tag">Big Data Analysis</span><span class="tag">E-Commerce</span><span class="tag">COVID-19</span>
+        </div>
+      <div class="project-links">
+          <a href="https://drive.google.com/file/d/1-iDAW9wnQ_-7gZd3F6ABPFK4wbSQ_Azh/view" class="pub-link" target="_blank">Report</a>
+        </div>
+    </div>
+
+    <div class="cert-card">
+      <div class="cert-date">2024/12</div>
+      <div class="cert-title">Intelligent Sign Language Transit System</div>
+       <div class="tags">
+          <span class="tag">Sign Language</span><span class="tag">Recongnization</span><span class="tag">MRT</span>
+        </div>
+      <div class="project-links">
+         <a href="https://www.youtube.com/watch?v=7AjV8oVHFzQ" class="pub-link" target="_blank">YouTube</a>
+         <a href="https://drive.google.com/file/d/1-iDAW9wnQ_-7gZd3F6ABPFK4wbSQ_Azh/view" class="pub-link" target="_blank">Report</a>
+        </div>
+    </div>
+
+    <!-- <div class="cert-card">
+      <div class="cert-title">NVIDIA: Building RAG Agents with LLMs</div>
+      <div class="cert-issuer">NVIDIA Deep Learning Institute</div>
+      <div class="cert-date">2024/10/12</div>
+    </div> -->
+
+  </div>
+</section>
+
+<!-- COMPETITIONS & CONFERENCES -->
+<section id="competitions">
+  <div class="section-header">
+    <span class="section-num">05</span>
+    <h2 class="section-title">Awards & <em>Conferences</em></h2>
+  </div>
+  <div class="two-col">
+    <div>
+      <h3 style="font-size:.8rem;font-family:'Space Mono',monospace;color:var(--gold);letter-spacing:.1em;text-transform:uppercase;margin-bottom:1rem;">Competitions</h3>
+      <div class="list-rows">
+        <div class="list-row">
+          <div class="dot"></div>
+          <div>
+            <strong>2025 NTPU USR x REsolution</strong> — Sustainable Technology Proposal Competition
+            <div style="font-size:.75rem;color:var(--muted);margin-top:.2rem;">2025/12</div>
+          </div>
+        </div>
+        <!-- <div class="list-row">
+          <div class="dot"></div>
+          <div>
+            <strong>Excellence Award</strong> — 3rd NTPU AI Smart Application Innovation Competition (Practical Division)
+            <div style="font-size:.75rem;color:var(--muted);margin-top:.2rem;">2025/05/22</div>
+          </div>
+        </div> -->
+      </div>
+    </div>
+
+    <div>
+      <h3 style="font-size:.8rem;font-family:'Space Mono',monospace;color:var(--accent2);letter-spacing:.1em;text-transform:uppercase;margin-bottom:1rem;">Conferences</h3>
+      <div class="list-rows">
+        <div class="list-row">
+          <div class="dot" style="background:var(--accent2)"></div>
+          <div>
+            ITAM-31 International Conference on IT Applications and Management
+            <div style="font-size:.75rem;color:var(--muted);margin-top:.2rem;">Jinju, Korea · 2025/10/26–30</div>
+          </div>
+        </div>
+        <!-- <div class="list-row">
+          <div class="dot" style="background:var(--accent2)"></div>
+          <div>
+            TWSC2 2025 — Taiwan Symposium On Cloud And Services Computing
+            <div style="font-size:.75rem;color:var(--muted);margin-top:.2rem;">New Taipei, Taiwan · 2025/07/03–04</div>
+          </div>
+        </div> -->
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OTHER EXPERIENCES -->
+<section id="other">
+  <div class="section-header">
+    <span class="section-num">06</span>
+    <h2 class="section-title">Other <em>Experiences</em></h2>
+  </div>
+  <div class="list-rows">
+    <div class="list-row">
+      <div class="dot" style="background:var(--green)"></div>
+      <div>Academic exchange visit to Korea — 2025/10/26–31</div>
+    </div>
+    <!-- <div class="list-row">
+      <div class="dot" style="background:var(--green)"></div>
+      <div>Academic exchange visit to Japan — 2024/11/04–08</div>
+    </div> -->
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="contact">
+  <div class="footer-copy">
+    © 2026 IMNTPU · Yun-Ting Hsu · All rights reserved.
+  </div>
+  <div class="footer-links">
+    <a href="mailto:yunnnn.315@gmail.com">yunnnn@mail</a>
+    <a href="https://github.com/yunting" target="_blank">GitHub/yunting</a>
+    <a hr
